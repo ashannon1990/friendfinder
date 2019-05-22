@@ -16,6 +16,13 @@
         <hr>
         <h3><strong>About You</strong></h3>
 
+        <div class="form-group">
+            <input id="nameEntry" type="text" class="form-control" placeholder="Name (Required)">
+        </div>
+        <div class="form-group">
+            <input id="photoEntry" type="text" class="form-control" placeholder="link to photo (Required)">
+        </div>
+
         <h3><strong>Question 1</strong></h3>
         <h4>You like spending time enjoying nature</h4>
         <select class="options" id="question1">
@@ -71,7 +78,62 @@
             <option value="5">5 (Strongly Agree)</option>
         </select>
 
-        <button type="button" class="btn btn-primary btn-lg btn-block" style="margin:20px">Submit Answers</button>
+        <h3><strong>Question 6</strong></h3>
+        <h4>You prefer beaches to mountains</h4>
+        <select class="options" id="question6">
+            <option value=""></option>
+            <option value="1">1 (Strongly Disagree)</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 (Strongly Agree)</option>
+        </select>
+
+        <h3><strong>Question 7</strong></h3>
+        <h4>You prefer going to small diners than to fancy restaurants</h4>
+        <select class="options" id="question7">
+            <option value=""></option>
+            <option value="1">1 (Strongly Disagree)</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 (Strongly Agree)</option>
+        </select>
+
+        <h3><strong>Question 8</strong></h3>
+        <h4>You like to regularly go to theme parks such as Disney or Universal</h4>
+        <select class="options" id="question8">
+            <option value=""></option>
+            <option value="1">1 (Strongly Disagree)</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 (Strongly Agree)</option>
+        </select>
+
+        <h3><strong>Question 9</strong></h3>
+        <h4>You enjoy going to see new movies on the premiere night</h4>
+        <select class="options" id="question9">
+            <option value=""></option>
+            <option value="1">1 (Strongly Disagree)</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 (Strongly Agree)</option>
+        </select>
+
+        <h3><strong>Question 10</strong></h3>
+        <h4>Nothing beats spending time with a good book</h4>
+        <select class="options" id="question10">
+            <option value=""></option>
+            <option value="1">1 (Strongly Disagree)</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 (Strongly Agree)</option>
+        </select>
+
+        <button type="button" id="submit" class="btn btn-primary btn-lg btn-block" style="margin:20px">Submit Answers</button>
 
     </div>
 
@@ -90,3 +152,23 @@
 </body>
 
 </html>
+
+<script type="text/javascript">
+$("#submit").on("click", function(event){
+    event.preventDefault();
+    var newName = $("#nameEntry").val().trim();
+    var newPhoto = $("#photoEntry").val().trim();
+    var newEntry = [$("#question1").val(), $("#question2").val(), $("#question3").val(), $("#question4").val(), $("#question5").val(), $("#question6").val(), $("#question7").val(), $("#question8").val(), $("#question9").val(), $("#question10").val()];
+    var newFriend = {
+        name: newName,
+        photo: newPhoto,
+        scores: newEntry
+    }
+    console.log(newFriend);
+    $.post("/api/friends", newFriend,
+      function(data) {
+      });
+})
+
+
+</script>
