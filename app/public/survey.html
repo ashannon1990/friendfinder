@@ -164,9 +164,13 @@ $("#submit").on("click", function(event){
         photo: newPhoto,
         scores: newEntry
     }
+
     console.log(newFriend);
     $.post("/api/friends", newFriend,
       function(data) {
+        if (data) {
+          alert("Yay! You have a new friend!");
+        }
       });
 })
 
