@@ -133,7 +133,26 @@
             <option value="5">5 (Strongly Agree)</option>
         </select>
 
-        <button type="button" id="submit" class="btn btn-primary btn-lg btn-block" style="margin:20px">Submit Answers</button>
+        <button type="button" id="submit" class="btn btn-primary btn-lg btn-block" style="margin:20px">Submit
+            Answers</button>
+
+        <div id="bestFriendModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="modal-title">Your New Best Friend</h1>
+                    </div>
+                    <div class="modal-body">
+                        <h2 id="bestFriend"></h2>
+                        <img id="bestFriendPhoto" src="#">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -146,33 +165,32 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-        <!-- javascript starts here -->
-    <script>
-    </script>
+        <script>
+        </script>
 </body>
 
 </html>
+<!-- javascript starts here -->
 
 <script type="text/javascript">
-$("#submit").on("click", function(event){
-    event.preventDefault();
-    var newName = $("#nameEntry").val().trim();
-    var newPhoto = $("#photoEntry").val().trim();
-    var newEntry = [parseInt($("#question1").val()), parseInt($("#question2").val()), parseInt($("#question3").val()), parseInt($("#question4").val()),parseInt( $("#question5").val()), parseInt($("#question6").val()), parseInt($("#question7").val()), parseInt($("#question8").val()), parseInt($("#question9").val()), parseInt($("#question10").val())];
-    var newFriend = {
-        name: newName,
-        photo: newPhoto,
-        scores: newEntry
-    }
-
-    console.log(newFriend);
-    $.post("/api/friends", newFriend,
-      function(data) {
-        if (data) {
-          alert("Yay! You have a new friend!");
+    $("#submit").on("click", function (event) {
+        event.preventDefault();
+        var newName = $("#nameEntry").val().trim();
+        var newPhoto = $("#photoEntry").val().trim();
+        var newEntry = [parseInt($("#question1").val()), parseInt($("#question2").val()), parseInt($("#question3").val()), parseInt($("#question4").val()), parseInt($("#question5").val()), parseInt($("#question6").val()), parseInt($("#question7").val()), parseInt($("#question8").val()), parseInt($("#question9").val()), parseInt($("#question10").val())];
+        var newFriend = {
+            name: newName,
+            photo: newPhoto,
+            scores: newEntry
         }
-      });
-})
 
+
+        $.post("/api/friends", newFriend, function (data) {
+                $("#bestFriend").text(data.name);
+                $("#bestFriendPhoto").attr("src", data.photo);
+                $("#bestFriendModal").modal("toggle");
+            });
+    })
+    
 
 </script>
