@@ -1,34 +1,49 @@
-var friendsData = require("../data/friends")
-
+var friendsData = require("../data/friends");
+var currentDifference;
 
 
 module.exports = function (app) {
+
   app.get("/api/friends", function (req, res) {
-    res.json(friendsData)
-  })
+    res.json(friendsData);
+  });
+
   app.post("/api/friends", function (req, res) {
-    friendsData.push(req.body);
-    res.json(true)
 
-    var user = req.body;
+    var totalDifference = [];
+    for (var i = 0; i < friendsData.length; i++) {
 
-    //  convert user input to integers
-    for (var i = 0; i < user.scores.length; i++) {
-      user.scores[i] = parseInt(user.scores[i])
-    }
-    //  compare user input to people in the api, and find the total difference between answers
-    var totalDifference = []
-    var currentDifference
-    for (var i = 0; i < friendsData[i].length; i++) {
-      currentDifference = 0
-      for (var j = 0; friendsData[i].scores.length; j++) {
-        difference += (Math.abs(req.body.scores[j] - friendsData[i].scores[j]));
-      }
+      currentDifference = 0;
+
+      for (var j = 0; j < friendsData[i].scores.length; j++) {
+        currentDifference += (Math.abs(req.body.scores[j] - friendsData[i].scores[j]));
+      };
+
+      console.log("Difference from " + friendsData[i].name + ": " + currentDifference);
+
       totalDifference.push(currentDifference);
 
-    }
-    // send back results to html page so they can be added to modal
-    friendsData.push(req.body);
-  });
-}
+    };
+    var leastDifference = totalDifference.sort(function (a, b) { return a - b })[0];
 
+
+    for (var i = 0; i < friendsData.length; i++) {
+      currentDifference = 0;
+      for (var j = 0; j < friendsData[i].scores.length; j++) {
+        currentDifference += (Math.abs(req.body.scores[j] - friendsData[i].scores[j]));
+      };
+      if (currentDifference === leastDifference) {
+        console.log("Friend found: " + friendsData[i].photo);
+        var friendFound = friendsData[i].name;
+        var photoFound = friendsData[i].photo;
+        res.json(friendsData[i]);
+
+      };
+    }
+
+    friendsData.push(req.body);
+
+
+
+  });
+};
