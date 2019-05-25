@@ -32,6 +32,7 @@
   },
   "bundleDependencies": false,
   "dependencies": {
+    "express": "^4.17.0",
     "got": "^6.7.1",
     "registry-auth-token": "^3.0.1",
     "registry-url": "^3.0.3",
@@ -69,6 +70,7 @@
     "url": "git+https://github.com/sindresorhus/package-json.git"
   },
   "scripts": {
+  "start": "node server.js",
     "test": "xo && ava"
   },
   "version": "4.0.1"
